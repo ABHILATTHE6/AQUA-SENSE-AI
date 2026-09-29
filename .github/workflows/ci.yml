@@ -1,0 +1,12 @@
+name: AQUA-SENSE CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  scaffold:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate repository scaffold
+        run: echo "AQUA-SENSE CI scaffold is ready."
