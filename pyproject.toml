@@ -1,0 +1,9 @@
+[project]
+name = "aqua-sense-ai"
+version = "0.2.0"
+description = "AI-powered local water stress and smart irrigation intelligence platform"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

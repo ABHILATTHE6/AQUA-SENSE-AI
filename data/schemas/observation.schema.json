@@ -2,21 +2,85 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://aqua-sense-ai.local/schemas/observation.schema.json",
   "title": "AQUA-SENSE Environmental Observation",
-  "description": "Initial canonical contract for a time-stamped environmental observation.",
+  "description": "Canonical contract for one time-stamped environmental observation. Variable semantics and canonical units are defined in the variable catalog.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["observation_id", "observed_at", "location_id", "source", "variable", "value", "unit"],
+  "required": [
+    "observation_id",
+    "observed_at",
+    "location_id",
+    "source",
+    "variable",
+    "value",
+    "unit"
+  ],
   "properties": {
-    "observation_id": {"type": "string", "minLength": 1},
-    "observed_at": {"type": "string", "format": "date-time"},
-    "location_id": {"type": "string", "minLength": 1},
-    "source": {"type": "string", "minLength": 1},
-    "variable": {"type": "string", "minLength": 1},
-    "value": {"type": "number"},
-    "unit": {"type": "string", "minLength": 1},
-    "quality_flag": {"type": "string"},
-    "latitude": {"type": "number", "minimum": -90, "maximum": 90},
-    "longitude": {"type": "number", "minimum": -180, "maximum": 180},
-    "metadata": {"type": "object"}
+    "observation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "location_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "variable": {
+      "type": "string",
+      "enum": [
+        "rainfall_mm",
+        "air_temperature_c",
+        "relative_humidity_pct",
+        "et0_mm",
+        "soil_moisture_m3_m3",
+        "groundwater_depth_m",
+        "irrigation_demand_mm"
+      ]
+    },
+    "value": {
+      "type": "number"
+    },
+    "unit": {
+      "type": "string",
+      "enum": [
+        "mm",
+        "degC",
+        "pct",
+        "m3/m3",
+        "m"
+      ]
+    },
+    "quality_flag": {
+      "type": "string",
+      "enum": [
+        "observed",
+        "estimated",
+        "imputed",
+        "suspect",
+        "missing"
+      ]
+    },
+    "latitude": {
+      "type": "number",
+      "minimum": -90,
+      "maximum": 90
+    },
+    "longitude": {
+      "type": "number",
+      "minimum": -180,
+      "maximum": 180
+    },
+    "metadata": {
+      "type": "object"
+    }
   }
 }

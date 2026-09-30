@@ -6,7 +6,7 @@ AQUA-SENSE AI is an end-to-end Artificial Intelligence and Data Science platform
 
 ## Core Problem
 
-Water stress is influenced by interacting factors such as rainfall variability, soil moisture, temperature, evapotranspiration, groundwater trends, and agricultural demand.
+Water stress is influenced by rainfall variability, soil moisture, temperature, evapotranspiration, groundwater trends, and agricultural demand.
 
 The platform is designed to answer:
 
@@ -14,67 +14,33 @@ The platform is designed to answer:
 
 ## Product Vision
 
-```text
-Public / Environmental Data
-          |
-          v
-     Data Ingestion
-          |
-          v
-     Data Validation
-          |
-          v
-   Feature Engineering
-          |
-          v
-  Forecasting + Anomaly Detection
-          |
-          v
-   Explainable AI (XAI)
-          |
-          v
-   What-if Simulation
-          |
-          v
- Decision-support Dashboard
-```
+Public / Environmental Data → Ingestion → Validation → Feature Engineering → Forecasting + Anomaly Detection → Explainable AI → What-if Simulation → Decision-support Dashboard
 
 ## Planned Capabilities
 
 - Multi-source environmental data ingestion
-- Historical and near-real-time data processing
+- Historical and near-real-time processing
 - Water-stress index construction
 - 7/14/30-day forecasting
 - Irrigation-demand estimation
-- Groundwater and environmental anomaly detection
+- Environmental anomaly detection
 - Geospatial risk mapping
-- Explainable AI using feature attribution
+- Explainable AI
 - What-if scenario simulation
 - Prediction confidence and data-quality indicators
 - REST API and interactive dashboard
-- Automated testing and reproducible development
-
-## Initial Technology Direction
-
-**Python · Pandas · NumPy · Scikit-learn · XGBoost/LightGBM · PostgreSQL/PostGIS · FastAPI · Docker · React · Plotly/MapLibre · GitHub Actions**
-
-The exact stack will be validated during implementation rather than assumed upfront.
 
 ## Engineering Principles
 
-1. **Evidence before modeling**
-2. **Baseline before complexity**
-3. **Reproducibility**
-4. **Explainability**
-5. **No false precision**
-6. **Decision support, not autonomous control**
+1. Evidence before modeling
+2. Baseline before complexity
+3. Reproducibility
+4. Explainability
+5. No false precision
+6. Decision support, not autonomous control
 
-## Development Mode
+## Development Status
 
-This project is being developed as a day-by-day engineering journey. Each completed development day gets a focused Git commit with its corresponding code, documentation, tests, or data artifacts.
+**Day 2 — Data contract complete**
 
-## Status
-
-**Day 1 — Foundation complete**
-
-Next: **Day 2 — Data Contract & Canonical Schema**
+Next: **Day 3 — Local Environment, Dataset Registry & Ingestion Skeleton**
