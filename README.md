@@ -8,27 +8,11 @@ AQUA-SENSE AI is an end-to-end Artificial Intelligence and Data Science platform
 
 Water stress is influenced by rainfall variability, soil moisture, temperature, evapotranspiration, groundwater trends, and agricultural demand.
 
-The platform is designed to answer:
-
 > **Where is water stress increasing, why is it increasing, and what could happen under alternative scenarios?**
 
-## Product Vision
+## Architecture
 
-Public / Environmental Data → Ingestion → Validation → Feature Engineering → Forecasting + Anomaly Detection → Explainable AI → What-if Simulation → Decision-support Dashboard
-
-## Planned Capabilities
-
-- Multi-source environmental data ingestion
-- Historical and near-real-time processing
-- Water-stress index construction
-- 7/14/30-day forecasting
-- Irrigation-demand estimation
-- Environmental anomaly detection
-- Geospatial risk mapping
-- Explainable AI
-- What-if scenario simulation
-- Prediction confidence and data-quality indicators
-- REST API and interactive dashboard
+`External Data → Ingestion → Raw Storage → Validation → Feature Engineering → ML → XAI → Scenario Engine → API/Dashboard`
 
 ## Engineering Principles
 
@@ -41,6 +25,6 @@ Public / Environmental Data → Ingestion → Validation → Feature Engineering
 
 ## Development Status
 
-**Day 2 — Data contract complete**
+**Day 3 — Data registry and ingestion skeleton complete**
 
-Next: **Day 3 — Local Environment, Dataset Registry & Ingestion Skeleton**
+Next: **Day 4 — First Real Weather Ingestion Connector**

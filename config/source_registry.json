@@ -1,0 +1,42 @@
+{
+  "version": "1.0.0",
+  "sources": [
+    {
+      "source_id": "open_meteo",
+      "name": "Open-Meteo Weather",
+      "category": "weather",
+      "access_type": "http_api",
+      "status": "planned",
+      "canonical_variables": [
+        "rainfall_mm",
+        "air_temperature_c",
+        "relative_humidity_pct",
+        "et0_mm",
+        "soil_moisture_m3_m3"
+      ],
+      "notes": "Initial weather ingestion candidate; connector implementation begins in a later day."
+    },
+    {
+      "source_id": "nasa_smap",
+      "name": "NASA SMAP Soil Moisture",
+      "category": "remote_sensing",
+      "access_type": "dataset_api",
+      "status": "planned",
+      "canonical_variables": [
+        "soil_moisture_m3_m3"
+      ],
+      "notes": "Independent soil-moisture source for validation and spatial enrichment."
+    },
+    {
+      "source_id": "cgwb_groundwater",
+      "name": "Central Ground Water Board Monitoring",
+      "category": "groundwater",
+      "access_type": "dataset",
+      "status": "planned",
+      "canonical_variables": [
+        "groundwater_depth_m"
+      ],
+      "notes": "Groundwater observations require well/location identity and observation date."
+    }
+  ]
+}

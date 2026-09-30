@@ -1,5 +1,13 @@
 # Changelog
 
+## Day 3 — Data Registry & Ingestion Skeleton
+
+- Added a machine-readable source registry for initial weather, soil-moisture, and groundwater sources.
+- Added a source-agnostic `SourceAdapter` contract and raw-record provenance model.
+- Added deterministic raw-data partitioning and JSON batch storage helpers.
+- Documented raw, processed, sample, schema, and contract data layers.
+- Added ingestion unit tests.
+
 ## Day 2 — Data Contract & Canonical Schema
 
 - Upgraded the observation schema with a controlled canonical variable vocabulary.
