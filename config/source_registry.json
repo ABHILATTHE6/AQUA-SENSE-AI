@@ -1,12 +1,12 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "sources": [
     {
       "source_id": "open_meteo",
       "name": "Open-Meteo Weather",
       "category": "weather",
       "access_type": "http_api",
-      "status": "planned",
+      "status": "active",
       "canonical_variables": [
         "rainfall_mm",
         "air_temperature_c",
@@ -14,7 +14,7 @@
         "et0_mm",
         "soil_moisture_m3_m3"
       ],
-      "notes": "Initial weather ingestion candidate; connector implementation begins in a later day."
+      "notes": "Forecast connector implemented on Day 4. Historical weather connector is planned for model-training data."
     },
     {
       "source_id": "nasa_smap",

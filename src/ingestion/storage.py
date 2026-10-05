@@ -1,4 +1,4 @@
-"""Filesystem conventions for immutable raw ingestion artifacts."""
+"""Filesystem conventions for immutable raw and validated data artifacts."""
 
 from pathlib import Path
 from typing import Any
@@ -13,5 +13,6 @@ def write_raw_json(root: str | Path, source_id: str, observed_date: str, records
     directory = raw_partition(root, source_id, observed_date)
     directory.mkdir(parents=True, exist_ok=True)
     output = directory / 'batch.json'
-    output.write_text(json.dumps(records, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+    output.write_text(json.dumps(records, indent=2, ensure_ascii=False) + '
+', encoding='utf-8')
     return output

@@ -25,6 +25,35 @@ Water stress is influenced by rainfall variability, soil moisture, temperature, 
 
 ## Development Status
 
-**Day 3 — Data registry and ingestion skeleton complete**
+**Day 4 — Open-Meteo weather ingestion connector complete**
 
-Next: **Day 4 — First Real Weather Ingestion Connector**
+Current flow:
+
+`Open-Meteo API → raw JSON → canonical observations → validation → processed JSONL`
+
+Next: **Day 5 — Historical weather ingestion for model-ready training data**
+
+## Day 4 Quickstart
+
+The connector uses the Open-Meteo Forecast API and requests:
+
+- precipitation → `rainfall_mm`
+- `temperature_2m` → `air_temperature_c`
+- `relative_humidity_2m` → `relative_humidity_pct`
+- `et0_fao_evapotranspiration` → `et0_mm`
+- `soil_moisture_0_to_1cm` → `soil_moisture_m3_m3`
+
+Run a real ingestion from a configured location:
+
+```bash
+python scripts/ingest_open_meteo.py --location demo_location --forecast-days 3
+```
+
+Output is written to:
+
+```text
+data/raw/<location_id>/<YYYY-MM-DD>/batch.json
+data/processed/<location_id>/<YYYY-MM-DD>/observations.jsonl
+```
+
+The committed fixture under `tests/fixtures/` is synthetic and exists only for deterministic tests. Live provider access is performed only when the CLI is run.

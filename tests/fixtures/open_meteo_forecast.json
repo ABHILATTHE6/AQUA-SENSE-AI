@@ -1,0 +1,14 @@
+{
+  "latitude": 20.5937,
+  "longitude": 78.9629,
+  "elevation": 149.0,
+  "timezone": "UTC",
+  "hourly": {
+    "time": ["2026-10-05T00:00", "2026-10-05T01:00"],
+    "precipitation": [0.0, 0.4],
+    "temperature_2m": [24.2, 24.0],
+    "relative_humidity_2m": [78, 80],
+    "et0_fao_evapotranspiration": [0.03, 0.02],
+    "soil_moisture_0_to_1cm": [0.31, 0.32]
+  }
+}

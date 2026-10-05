@@ -1,5 +1,16 @@
 # Changelog
 
+## Day 4 — First Real Weather Ingestion Connector
+
+- Implemented an Open-Meteo Forecast API adapter using Python's standard-library HTTP stack.
+- Added provider-to-canonical mappings for precipitation, temperature, humidity, ET₀, and near-surface soil moisture.
+- Added deterministic UTC timestamp normalization and `estimated` quality semantics for forecast values.
+- Added raw provider payload capture with provenance through the existing `RawRecord` contract.
+- Added processed JSONL persistence for validated canonical observations.
+- Added a command-line ingestion entry point driven by `config/locations.json`.
+- Added deterministic fixture-based tests covering URL construction, response validation, normalization, provenance, adapter behavior, and end-to-end layer persistence.
+- Upgraded CI to install pytest and execute the test suite on pushes and pull requests.
+
 ## Day 3 — Data Registry & Ingestion Skeleton
 
 - Added a machine-readable source registry for initial weather, soil-moisture, and groundwater sources.

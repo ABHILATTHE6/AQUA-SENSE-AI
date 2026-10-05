@@ -14,8 +14,12 @@ Raw files are partitioned as:
 
 `raw/<source_id>/<YYYY-MM-DD>/batch.json`
 
-Provider payloads remain unchanged inside the raw layer. Normalization belongs in the validated/processed pipeline.
+Processed canonical observations use:
+
+`processed/<location_id>/<YYYY-MM-DD>/observations.jsonl`
+
+Provider payloads remain unchanged inside the raw layer. Normalization and contract validation happen before the processed layer is written.
 
 ## Data Safety
 
-Large raw datasets are not committed to Git. `.gitignore` excludes raw and processed data by default. Small synthetic fixtures may be committed under `samples/`.
+Large raw datasets are not committed to Git. `.gitignore` excludes raw and processed data by default. Small synthetic fixtures may be committed under `samples/` or test fixture directories.
