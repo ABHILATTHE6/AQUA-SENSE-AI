@@ -25,17 +25,19 @@ Water stress is influenced by rainfall variability, soil moisture, temperature, 
 
 ## Development Status
 
-**Day 4 — Open-Meteo weather ingestion connector complete**
+**Day 5 — Historical weather ingestion and daily training-input layer complete**
 
-Current flow:
+Current data flow:
 
-`Open-Meteo API → raw JSON → canonical observations → validation → processed JSONL`
+`Open-Meteo Forecast API → forecast observations`
 
-Next: **Day 5 — Historical weather ingestion for model-ready training data**
+`Open-Meteo Historical API → raw reanalysis → canonical hourly observations → daily model inputs`
+
+Next: **Day 6 — Data quality profiling and leakage-safe feature engineering**
 
 ## Day 4 Quickstart
 
-The connector uses the Open-Meteo Forecast API and requests:
+The forecast connector requests:
 
 - precipitation → `rainfall_mm`
 - `temperature_2m` → `air_temperature_c`
@@ -43,17 +45,31 @@ The connector uses the Open-Meteo Forecast API and requests:
 - `et0_fao_evapotranspiration` → `et0_mm`
 - `soil_moisture_0_to_1cm` → `soil_moisture_m3_m3`
 
-Run a real ingestion from a configured location:
+Run:
 
 ```bash
 python scripts/ingest_open_meteo.py --location demo_location --forecast-days 3
 ```
 
-Output is written to:
+## Day 5 Historical Ingestion
 
-```text
-data/raw/<location_id>/<YYYY-MM-DD>/batch.json
-data/processed/<location_id>/<YYYY-MM-DD>/observations.jsonl
+Historical extraction is bounded to 366 days per request:
+
+```bash
+python scripts/ingest_historical_weather.py \
+  --location demo_location \
+  --start-date 2026-09-01 \
+  --end-date 2026-09-30
 ```
 
-The committed fixture under `tests/fixtures/` is synthetic and exists only for deterministic tests. Live provider access is performed only when the CLI is run.
+Outputs:
+
+```text
+data/raw/open_meteo_historical/<start-date>/batch.json
+data/processed/<location_id>/hourly/<start>_<end>.jsonl
+data/processed/<location_id>/daily/<start>_<end>.jsonl
+```
+
+The daily layer contains rainfall sum, mean temperature, mean relative humidity, ET₀ sum, and mean near-surface soil moisture. Days without a complete set of 24 hourly values are excluded rather than silently imputed.
+
+All committed fixtures are synthetic and exist only for deterministic tests. Live provider access occurs when the CLI is run.

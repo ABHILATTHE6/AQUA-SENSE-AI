@@ -1,5 +1,16 @@
 # Changelog
 
+## Day 5 — Historical Weather & Training Input Layer
+
+- Added a bounded Open-Meteo Historical Weather API adapter using the `/v1/archive` endpoint.
+- Added configurable historical date ranges and reanalysis model selection with a 366-day safety bound.
+- Added canonical normalization for temperature, relative humidity, precipitation, ET₀, and near-surface soil moisture.
+- Preserved raw reanalysis payloads with ingestion provenance.
+- Added a daily aggregation layer for model inputs: sums for rainfall/ET₀ and means for state variables.
+- Excluded incomplete hourly days instead of silently imputing missing values.
+- Added a historical ingestion CLI and deterministic fixture-based tests.
+- Documented the historical data and modeling boundary.
+
 ## Day 4 — First Real Weather Ingestion Connector
 
 - Implemented an Open-Meteo Forecast API adapter using Python's standard-library HTTP stack.
