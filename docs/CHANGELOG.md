@@ -1,5 +1,16 @@
 # Changelog
 
+## Day 6 — Data Quality Profiling & Leakage-Safe Features
+
+- Added a deterministic daily-data quality profiler with row counts, date coverage, duplicates, calendar gaps, completeness, and numeric distribution statistics.
+- Added Tukey IQR outlier counts as review signals rather than automatic corrections.
+- Added explicit review flags for duplicate dates, calendar gaps, missing values, and IQR outliers.
+- Added leakage-safe lag features at 1, 3, and 7 days for core weather variables.
+- Added prior-window rolling statistics while excluding the current observation from every window.
+- Required complete prior calendar windows for rolling features so gaps do not masquerade as continuous history.
+- Added CLI tools for profiling datasets and generating feature JSONL outputs.
+- Added tests proving current-day values cannot leak into rolling features and that calendar gaps suppress invalid windows.
+
 ## Day 5 — Historical Weather & Training Input Layer
 
 - Added a bounded Open-Meteo Historical Weather API adapter using the `/v1/archive` endpoint.

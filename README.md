@@ -25,35 +25,15 @@ Water stress is influenced by rainfall variability, soil moisture, temperature, 
 
 ## Development Status
 
-**Day 5 — Historical weather ingestion and daily training-input layer complete**
+**Day 6 — Data quality profiling and leakage-safe feature engineering complete**
 
-Current data flow:
+Current flow:
 
-`Open-Meteo Forecast API → forecast observations`
+`Open-Meteo Historical API → raw reanalysis → canonical hourly observations → daily model inputs → quality profile → lag/rolling features`
 
-`Open-Meteo Historical API → raw reanalysis → canonical hourly observations → daily model inputs`
-
-Next: **Day 6 — Data quality profiling and leakage-safe feature engineering**
-
-## Day 4 Quickstart
-
-The forecast connector requests:
-
-- precipitation → `rainfall_mm`
-- `temperature_2m` → `air_temperature_c`
-- `relative_humidity_2m` → `relative_humidity_pct`
-- `et0_fao_evapotranspiration` → `et0_mm`
-- `soil_moisture_0_to_1cm` → `soil_moisture_m3_m3`
-
-Run:
-
-```bash
-python scripts/ingest_open_meteo.py --location demo_location --forecast-days 3
-```
+Next: **Day 7 — Water-stress target definition and transparent baseline index**
 
 ## Day 5 Historical Ingestion
-
-Historical extraction is bounded to 366 days per request:
 
 ```bash
 python scripts/ingest_historical_weather.py \
@@ -62,14 +42,28 @@ python scripts/ingest_historical_weather.py \
   --end-date 2026-09-30
 ```
 
-Outputs:
+## Day 6 Quality & Features
 
-```text
-data/raw/open_meteo_historical/<start-date>/batch.json
-data/processed/<location_id>/hourly/<start>_<end>.jsonl
-data/processed/<location_id>/daily/<start>_<end>.jsonl
+Profile a daily JSONL dataset:
+
+```bash
+python scripts/profile_daily_weather.py \
+  --input data/processed/demo_location/daily/2026-09-01_2026-09-30.jsonl
 ```
 
-The daily layer contains rainfall sum, mean temperature, mean relative humidity, ET₀ sum, and mean near-surface soil moisture. Days without a complete set of 24 hourly values are excluded rather than silently imputed.
+Create leakage-safe features:
 
-All committed fixtures are synthetic and exist only for deterministic tests. Live provider access occurs when the CLI is run.
+```bash
+python scripts/engineer_daily_features.py \
+  --input data/processed/demo_location/daily/2026-09-01_2026-09-30.jsonl \
+  --output data/processed/demo_location/features/2026-09-01_2026-09-30.jsonl
+```
+
+Feature engineering rules:
+
+- lag features use exact prior calendar days
+- rolling windows exclude the current day
+- incomplete calendar windows produce `null`, not fabricated values
+- quality profiling reports gaps, duplicates, missingness, and IQR outliers without auto-correction
+
+All committed fixtures are synthetic and exist only for deterministic tests. Live provider access occurs when the ingestion CLI is run.
