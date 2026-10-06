@@ -1,0 +1,2 @@
+{"date":"2026-09-01","location_id":"demo_location","rainfall_mm_sum":2.0,"air_temperature_c_mean":25.0,"relative_humidity_pct_mean":60.0,"et0_mm_sum":4.0,"soil_moisture_m3_m3_mean":0.30,"complete_hourly_day":true}
+{"date":"2026-09-02","location_id":"demo_location","rainfall_mm_sum":4.0,"air_temperature_c_mean":25.5,"relative_humidity_pct_mean":59.0,"et0_mm_sum":4.2,"soil_moisture_m3_m3_mean":0.31,"complete_hourly_day":true}
