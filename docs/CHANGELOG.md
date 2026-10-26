@@ -1,5 +1,15 @@
 # Changelog
 
+## Day 8 — Baseline Evaluation & Time-Aware Comparison
+
+- Added chronological train/validation/test partitioning based on unique calendar dates; all locations from the same day remain in one partition.
+- Rejected duplicate date/location observations and invalid or too-short time windows rather than silently splitting them.
+- Added a deterministic sensitivity report comparing the default water-stress index with alternative weight and threshold configurations.
+- Reported score distribution, category counts, mean/max absolute score shifts, and category-change rates.
+- Added descriptive sensitivity summaries for chronological periods when at least three unique dates are available.
+- Explicitly disclosed that no independent ground-truth target is available and predictive accuracy has not been assessed.
+- Added a JSON report CLI, automated tests, and an evaluation-protocol document.
+
 ## Day 7 — Water-Stress Target Definition & Transparent Baseline Index
 
 - Defined an explicitly exploratory 0–100 rule-based water-stress screening index.

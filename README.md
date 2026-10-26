@@ -23,13 +23,26 @@ AQUA-SENSE AI is an end-to-end AI/Data Science platform designed to analyze envi
 
 ## Development status
 
-**Day 7 — Explainable rule-based water-stress baseline complete**
+**Day 8 — Baseline sensitivity analysis and time-aware protocol complete**
 
 Current flow:
 
 `Open-Meteo → raw/reanalysis → canonical observations → daily inputs → quality profile → leakage-safe features → rule-based stress index`
 
-Next: **Day 8 — Baseline evaluation protocol and time-aware comparison**
+Next: **Day 9 — Independent reference target and forecasting readiness**
+
+
+## Baseline sensitivity evaluation (Day 8)
+
+Run the evaluation CLI with daily JSONL input and a JSON output path:
+
+    python scripts/evaluate_water_stress_baseline.py --input <daily.jsonl> --output reports/water_stress_sensitivity.json
+
+The report compares the default index with equal-weight, soil-moisture-emphasis, atmospheric-demand-emphasis, and alternative-threshold configurations. It summarizes score shifts and category changes, with descriptive results by chronological period where sufficient dates exist.
+
+**Important:** the project does not yet have an independent ground-truth water-stress label. Sensitivity results are not predictive accuracy; no accuracy metrics are reported. The time-aware split implementation is a foundation for future supervised evaluation, not evidence that a predictive model has been validated.
+
+See the [evaluation protocol](docs/evaluation-protocol.md).
 
 ## Historical ingestion
 
