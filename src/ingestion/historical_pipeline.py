@@ -24,7 +24,6 @@ def ingest_historical_open_meteo(
     fetcher: Callable[[HistoricalConfig], dict] = fetch_payload,
 ) -> tuple[Path, Path, Path, int, int]:
     """Fetch, capture raw, normalize, aggregate, and persist historical weather data."""
-
     payload = fetcher(config)
     raw_record = to_raw_record(config, payload)
     raw_path = write_raw_json(
@@ -39,8 +38,7 @@ def ingest_historical_open_meteo(
     hourly_dir.mkdir(parents=True, exist_ok=True)
     hourly_path = hourly_dir / f"{config.start_date}_{config.end_date}.jsonl"
     hourly_path.write_text(
-        "".join(json.dumps(item, ensure_ascii=False, sort_keys=True) + "
-" for item in observations),
+        "".join(json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n" for item in observations),
         encoding="utf-8",
     )
 
@@ -49,8 +47,7 @@ def ingest_historical_open_meteo(
     daily_dir.mkdir(parents=True, exist_ok=True)
     daily_path = daily_dir / f"{config.start_date}_{config.end_date}.jsonl"
     daily_path.write_text(
-        "".join(json.dumps(item, ensure_ascii=False, sort_keys=True) + "
-" for item in daily_rows),
+        "".join(json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n" for item in daily_rows),
         encoding="utf-8",
     )
 
