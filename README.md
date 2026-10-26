@@ -2,19 +2,17 @@
 
 **AI-Powered Local Water Stress & Smart Irrigation Intelligence Platform**
 
-AQUA-SENSE AI is an end-to-end Artificial Intelligence and Data Science platform designed to forecast local water stress, explain the factors driving the forecast, simulate what-if scenarios, and support data-informed water and irrigation decisions.
+AQUA-SENSE AI is an end-to-end AI/Data Science platform designed to analyze environmental conditions, explain water-stress signals, and support informed water and irrigation decisions.
 
-## Core Problem
+## Core question
 
-Water stress is influenced by rainfall variability, soil moisture, temperature, evapotranspiration, groundwater trends, and agricultural demand.
-
-> **Where is water stress increasing, why is it increasing, and what could happen under alternative scenarios?**
+**Where is water stress increasing, why might it be increasing, and what could happen under alternative scenarios?**
 
 ## Architecture
 
-`External Data → Ingestion → Raw Storage → Validation → Feature Engineering → ML → XAI → Scenario Engine → API/Dashboard`
+`External Data → Ingestion → Raw Storage → Validation → Feature Engineering → Baseline/ML → Explainability → Scenario Engine → API/Dashboard`
 
-## Engineering Principles
+## Engineering principles
 
 1. Evidence before modeling
 2. Baseline before complexity
@@ -23,17 +21,17 @@ Water stress is influenced by rainfall variability, soil moisture, temperature, 
 5. No false precision
 6. Decision support, not autonomous control
 
-## Development Status
+## Development status
 
-**Day 6 — Data quality profiling and leakage-safe feature engineering complete**
+**Day 7 — Explainable rule-based water-stress baseline complete**
 
 Current flow:
 
-`Open-Meteo Historical API → raw reanalysis → canonical hourly observations → daily model inputs → quality profile → lag/rolling features`
+`Open-Meteo → raw/reanalysis → canonical observations → daily inputs → quality profile → leakage-safe features → rule-based stress index`
 
-Next: **Day 7 — Water-stress target definition and transparent baseline index**
+Next: **Day 8 — Baseline evaluation protocol and time-aware comparison**
 
-## Day 5 Historical Ingestion
+## Historical ingestion
 
 ```bash
 python scripts/ingest_historical_weather.py \
@@ -42,28 +40,37 @@ python scripts/ingest_historical_weather.py \
   --end-date 2026-09-30
 ```
 
-## Day 6 Quality & Features
-
-Profile a daily JSONL dataset:
+## Quality profiling
 
 ```bash
-python scripts/profile_daily_weather.py \
-  --input data/processed/demo_location/daily/2026-09-01_2026-09-30.jsonl
+python scripts/profile_daily_weather.py --input <daily.jsonl>
 ```
 
-Create leakage-safe features:
+## Leakage-safe features
 
 ```bash
 python scripts/engineer_daily_features.py \
-  --input data/processed/demo_location/daily/2026-09-01_2026-09-30.jsonl \
-  --output data/processed/demo_location/features/2026-09-01_2026-09-30.jsonl
+  --input <daily.jsonl> \
+  --output <features.jsonl>
 ```
 
-Feature engineering rules:
+## Water-stress baseline
 
-- lag features use exact prior calendar days
-- rolling windows exclude the current day
-- incomplete calendar windows produce `null`, not fabricated values
-- quality profiling reports gaps, duplicates, missingness, and IQR outliers without auto-correction
+```bash
+python scripts/score_water_stress.py \
+  --input <daily.jsonl> \
+  --output <stress_scores.jsonl>
+```
 
-All committed fixtures are synthetic and exist only for deterministic tests. Live provider access occurs when the ingestion CLI is run.
+### Baseline components
+
+| Component | Direction | Default weight |
+| --- | --- | ---: |
+| Rainfall deficit | Less rainfall → higher stress | 0.25 |
+| Soil-moisture deficit | Drier soil → higher stress | 0.35 |
+| Evaporative demand | Higher ET₀ → higher stress | 0.25 |
+| Heat | Higher mean temperature → higher stress | 0.15 |
+
+Each component is clamped to 0–1 and combined into a 0–100 **relative screening index**. Scores are not drought probabilities and are not calibrated operational thresholds. The defaults are transparent assumptions for a first baseline; local validation and domain input are required before decision use.
+
+All committed fixtures are synthetic and used for deterministic tests. Live provider access occurs when ingestion commands are run.

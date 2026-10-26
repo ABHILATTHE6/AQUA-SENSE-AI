@@ -1,5 +1,16 @@
 # Changelog
 
+## Day 7 — Water-Stress Target Definition & Transparent Baseline Index
+
+- Defined an explicitly exploratory 0–100 rule-based water-stress screening index.
+- Added rainfall-deficit, soil-moisture-deficit, evaporative-demand, and heat components with documented default weights.
+- Exposed component scores and weighted contributions for interpretation.
+- Added configurable thresholds and weight-sum validation.
+- Added strict input checks for missing/non-finite values, negative rainfall/ET₀, and out-of-range soil moisture.
+- Added a JSONL CLI for scoring daily weather records.
+- Added tests for dry/hot versus wet/cool cases, score bounds, explanation fields, and invalid inputs.
+- Documented that the index is not a drought probability and requires local calibration before operational use.
+
 ## Day 6 — Data Quality Profiling & Leakage-Safe Features
 
 - Added a deterministic daily-data quality profiler with row counts, date coverage, duplicates, calendar gaps, completeness, and numeric distribution statistics.
