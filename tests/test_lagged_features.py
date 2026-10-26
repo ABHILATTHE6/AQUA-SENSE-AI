@@ -37,5 +37,7 @@ def test_missing_calendar_day_prevents_false_rolling_window():
         row(2, 1.0, 20.0),
         row(4, 1.0, 20.0),
     ])
-    assert rows[2]["rainfall_mm_sum_lag_3d"] is None
+    # The day-1 observation is exactly three calendar days before day 4.
+    assert rows[2]["rainfall_mm_sum_lag_3d"] == 1.0
+    # The rolling window includes missing day 3, so it must remain unavailable.
     assert rows[2]["rainfall_mm_sum_rolling_3d"] is None
