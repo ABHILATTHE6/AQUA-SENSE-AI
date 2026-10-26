@@ -40,7 +40,7 @@ def main() -> int:
         parser.error(str(exc))
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(
-        json.dumps(report, indent=2, ensure_ascii=False, sort_keys=True) + "\\n",
+        json.dumps(report, indent=2, ensure_ascii=False, sort_keys=True) + "\n",
         encoding="utf-8",
     )
     print(

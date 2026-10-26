@@ -20,7 +20,7 @@ def test_evaluation_cli_writes_json_report(tmp_path, monkeypatch, capsys):
             }
         )
     input_path.write_text(
-        "".join(json.dumps(row) + "\\n" for row in rows), encoding="utf-8"
+        "".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8"
     )
     monkeypatch.setattr(
         sys,

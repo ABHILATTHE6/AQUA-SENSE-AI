@@ -107,6 +107,8 @@ def compare_scores(
     comparison_by_key = {
         (row.get("date"), row.get("location_id")): row for row in comparison_scores
     }
+    if len(baseline_by_key) != len(baseline_scores) or len(comparison_by_key) != len(comparison_scores):
+        raise ValueError("duplicate date/location keys are not allowed in score comparisons")
     if baseline_by_key.keys() != comparison_by_key.keys():
         raise ValueError("score collections must cover the same date/location observations")
 

@@ -1,3 +1,5 @@
+import pytest
+
 from src.evaluation.sensitivity import build_sensitivity_report, compare_scores
 from src.scoring.water_stress import score_dataset
 
@@ -52,3 +54,10 @@ def test_report_gracefully_marks_short_date_window_as_unavailable():
     report = build_sensitivity_report(weather_rows(2))
     assert report["time_aware_analysis"]["available"] is False
     assert "three unique dates" in report["time_aware_analysis"]["reason"]
+
+
+def test_report_rejects_duplicate_date_location_rows():
+    rows = weather_rows(3)
+    rows.append(dict(rows[0]))
+    with pytest.raises(ValueError, match="duplicate date/location keys"):
+        build_sensitivity_report(rows)
