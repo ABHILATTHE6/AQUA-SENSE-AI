@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aqua-sense-ai.local/schemas/reference-target.schema.json",
+  "title": "AQUA-SENSE Independent Reference Target",
+  "description": "Contract for external observations or assessments used to assess water-stress outputs. Source independence and domain suitability must be reviewed separately.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["reference_id", "observed_at", "location_id", "source", "target_variable", "value", "unit", "temporal_support", "spatial_support", "quality_flag", "independence_assessment"],
+  "properties": {
+    "reference_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "location_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "source": {"type": "string", "minLength": 1, "maxLength": 128},
+    "source_record_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "target_variable": {"type": "string", "enum": ["surface_soil_moisture_m3_m3", "groundwater_depth_m", "vegetation_health_anomaly", "official_drought_classification", "field_water_stress_assessment"]},
+    "value": {"oneOf": [{"type": "number"}, {"type": "string", "minLength": 1}]},
+    "unit": {"type": "string", "minLength": 1, "maxLength": 32},
+    "temporal_support": {"type": "string", "enum": ["instantaneous", "daily", "weekly", "monthly", "seasonal", "irregular"]},
+    "spatial_support": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": {"type": "string", "enum": ["point", "grid_cell", "administrative_area"]},
+        "spatial_id": {"type": "string", "minLength": 1, "maxLength": 200},
+        "resolution_km": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "quality_flag": {"type": "string", "enum": ["observed", "estimated", "suspect"]},
+    "independence_assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "notes"],
+      "properties": {
+        "status": {"type": "string", "enum": ["not_assessed", "candidate", "approved", "rejected"]},
+        "notes": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "reviewer": {"type": "string", "minLength": 1, "maxLength": 128},
+        "reviewed_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "metadata": {"type": "object"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"target_variable": {"const": "surface_soil_moisture_m3_m3"}}},
+      "then": {"properties": {"unit": {"const": "m3/m3"}, "value": {"type": "number", "minimum": 0, "maximum": 1}}}
+    },
+    {
+      "if": {"properties": {"target_variable": {"const": "groundwater_depth_m"}}},
+      "then": {"properties": {"unit": {"const": "m"}, "value": {"type": "number", "minimum": 0}}}
+    },
+    {
+      "if": {"properties": {"target_variable": {"const": "vegetation_health_anomaly"}}},
+      "then": {"properties": {"unit": {"const": "index"}, "value": {"type": "number"}}}
+    },
+    {
+      "if": {"properties": {"target_variable": {"enum": ["official_drought_classification", "field_water_stress_assessment"]}}},
+      "then": {"properties": {"unit": {"const": "category"}, "value": {"type": "string", "minLength": 1}}}
+    }
+  ]
+}

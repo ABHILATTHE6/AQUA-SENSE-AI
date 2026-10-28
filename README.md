@@ -29,8 +29,17 @@ Current flow:
 
 `Open-Meteo → raw/reanalysis → canonical observations → daily inputs → quality profile → leakage-safe features → rule-based stress index`
 
-Next: **Day 9 — Independent reference target and forecasting readiness**
+Next: **Day 10 — First reference dataset acquisition and quality review**
 
+
+
+## Reference targets and validation readiness (Day 9)
+
+Candidate reference sources and their limits are registered in config/reference_target_registry.json. The schema and validator are documented in docs/reference-target-contract.md.
+
+NASA SMAP is registered for component-level soil-moisture comparison, not as standalone ground truth for the full composite index. CGWB groundwater measurements provide separate hydrological context, while official drought classifications or documented field observations may become candidate outcome targets after source and methodology review.
+
+No external reference series has been downloaded or labelled as ground truth by this step. Predictive accuracy remains unassessed until an appropriate independent target is acquired, aligned, and reviewed.
 
 ## Baseline sensitivity evaluation (Day 8)
 

@@ -1,5 +1,15 @@
 # Changelog
 
+## Day 9 — Independent Reference Target & Forecasting Readiness
+
+- Added a machine-readable reference-target contract for sourced numeric measurements and categorical assessments.
+- Added validation for timezone-aware timestamps, source identity, target variable/unit compatibility, finite values, spatial/temporal support, and review provenance.
+- Added a mechanical independence screen that flags shared source or target-concept overlap against model inputs.
+- Registered NASA SMAP, CGWB groundwater monitoring, official drought classifications, and local field assessments as candidates with explicit usage limitations.
+- Documented that source independence alone does not establish target validity and that component-level soil-moisture comparison is not full-index ground truth.
+- Added deterministic tests for valid targets, invalid units/ranges, missing review metadata, and overlap safeguards.
+- No external reference observations were downloaded or treated as ground truth in this step.
+
 ## Day 8 — Baseline Evaluation & Time-Aware Comparison
 
 - Added chronological train/validation/test partitioning based on unique calendar dates; all locations from the same day remain in one partition.

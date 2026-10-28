@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "sources": [
     {
       "source_id": "open_meteo",
@@ -25,7 +25,7 @@
       "canonical_variables": [
         "soil_moisture_m3_m3"
       ],
-      "notes": "Independent soil-moisture source for validation and spatial enrichment."
+      "notes": "Candidate independent satellite reference for soil-moisture component checks. Because the index already includes soil moisture, this is not by itself ground truth for the full composite index. See config/reference_target_registry.json."
     },
     {
       "source_id": "cgwb_groundwater",
@@ -36,7 +36,7 @@
       "canonical_variables": [
         "groundwater_depth_m"
       ],
-      "notes": "Groundwater observations require well/location identity and observation date."
+      "notes": "Candidate independent hydrological context or target for a separately defined groundwater-stress task. Station, cadence, local relevance, and source coverage require review. See config/reference_target_registry.json."
     }
   ]
 }

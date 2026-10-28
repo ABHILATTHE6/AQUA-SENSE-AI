@@ -1,0 +1,62 @@
+{
+  "version": "1.0.0",
+  "purpose": "Register candidate reference sources and clarify what each can and cannot validate.",
+  "rules": [
+    "A candidate reference is not automatically ground truth.",
+    "A source must be independent of model inputs for held-out target evaluation.",
+    "A reference that measures one component already used in the index is component-level evidence, not independent validation of the whole index.",
+    "Spatial and temporal support must be documented before joining a reference to a model output.",
+    "Only reviewed records with an explicit, defensible target definition may be approved for predictive evaluation."
+  ],
+  "targets": [
+    {
+      "target_id": "nasa_smap_surface_soil_moisture",
+      "source_id": "nasa_smap",
+      "name": "NASA SMAP surface soil moisture",
+      "target_variable": "surface_soil_moisture_m3_m3",
+      "status": "candidate_component_reference",
+      "recommended_use": "Compare the direction and timing of the Open-Meteo soil-moisture component against a separate satellite retrieval after quality filtering and spatial-temporal alignment.",
+      "not_suitable_for": "Treating this alone as fully independent ground truth for the composite water-stress index, because soil moisture is already one of the index components.",
+      "nominal_spatial_resolution_km": 9,
+      "temporal_support": "daily_composite",
+      "source_url": "https://earth.gsfc.nasa.gov/hydro/data/nasa-usda-global-soil-moisture-data",
+      "source_notes": "NASA's SMAP L3 Enhanced product is a satellite-derived daily soil-moisture estimate at about 9 km. Product version, quality flags, overpass, land cover, and acquisition date must be recorded for any actual extraction."
+    },
+    {
+      "target_id": "cgwb_groundwater_depth",
+      "source_id": "cgwb_groundwater",
+      "name": "Central Ground Water Board water level observations",
+      "target_variable": "groundwater_depth_m",
+      "status": "candidate_hydrological_context",
+      "recommended_use": "Provide independent hydrological context or support a separately defined groundwater-stress outcome when the selected well, dates, and local relevance are documented.",
+      "not_suitable_for": "Calling groundwater depth direct ground truth for daily surface-soil or crop stress without a defensible hydrological/agronomic relationship.",
+      "temporal_support": "periodic_or_station_telemetry",
+      "source_url": "https://cgwb.gov.in/en/ground-water-level-monitoring",
+      "source_notes": "CGWB describes a national monitoring network with periodic measurements and some higher-frequency telemetry stations. Actual coverage and cadence vary by station and dataset."
+    },
+    {
+      "target_id": "official_drought_classification",
+      "source_id": "india_official_drought_assessment",
+      "name": "Official, documented drought assessment",
+      "target_variable": "official_drought_classification",
+      "status": "candidate_outcome_target",
+      "recommended_use": "Potential independent outcome for an administrative-area/season classification task if an authoritative record, method, dates, and geographic unit are available.",
+      "not_suitable_for": "Daily location-level labels unless the source actually supports that temporal and spatial resolution.",
+      "temporal_support": "seasonal_or_administrative_period",
+      "source_url": "https://vedas.sac.gov.in/static/pdf/Drought%20Manual-2020.pdf",
+      "source_notes": "India's drought management manual discusses assessment across rainfall, vegetation, water, crop, and other indicator groups. Access to a consistent machine-readable outcome series must be confirmed before this is used as a target."
+    },
+    {
+      "target_id": "local_field_water_stress",
+      "source_id": "local_field_observations",
+      "name": "Local field water-stress assessment",
+      "target_variable": "field_water_stress_assessment",
+      "status": "candidate_local_outcome_target",
+      "recommended_use": "Potentially strong local validation when observations use a documented protocol, sampling plan, assessor guidance, location/time metadata, and independent quality review.",
+      "not_suitable_for": "Evaluation from anecdotal or retrospectively assigned labels without documented criteria.",
+      "temporal_support": "irregular_or_daily",
+      "source_url": null,
+      "source_notes": "Requires data collection and explicit consent/permissions where applicable; no field observations are currently included in this repository."
+    }
+  ]
+}
