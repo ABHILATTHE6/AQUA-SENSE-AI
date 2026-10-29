@@ -23,15 +23,32 @@ AQUA-SENSE AI is an end-to-end AI/Data Science platform designed to analyze envi
 
 ## Development status
 
-**Day 8 — Baseline sensitivity analysis and time-aware protocol complete**
+**Day 10 — Karnataka groundwater reference ingestion and quality-review pipeline complete**
 
 Current flow:
 
 `Open-Meteo → raw/reanalysis → canonical observations → daily inputs → quality profile → leakage-safe features → rule-based stress index`
 
-Next: **Day 10 — First reference dataset acquisition and quality review**
+Next: **Day 11 — Inspect downloaded coverage and define safe station-weather alignment**
 
 
+
+
+## Karnataka groundwater acquisition and quality review (Day 10)
+
+Dataset: [Karnataka Ground Water Department telemetry on NWDP](https://nwdp.nwic.gov.in/en/dataset/ground-water-level-telemetry-hourly-karnataka-ground-water-department).
+
+Run the streaming acquisition, normalization, and quality report:
+
+    python scripts/ingest_karnataka_groundwater.py
+
+For a CSV already on disk, process offline:
+
+    python scripts/ingest_karnataka_groundwater.py --input <local.csv> --limit 1000
+
+The pipeline preserves provider-native CSV in the Git-ignored raw layer, computes SHA-256, normalizes valid rows to the reference-target contract, quarantines rejected rows, and reports coverage, duplicate station/timestamp records, coordinates, time range, and measurement range. Naive timestamps default to Asia/Kolkata; that assumption is retained in each record for review.
+
+These observations are candidate hydrological context, not ground truth for the composite surface water-stress index. See [the acquisition and quality-review protocol](docs/karnataka-groundwater-acquisition.md).
 
 ## Reference targets and validation readiness (Day 9)
 

@@ -57,6 +57,18 @@
       "temporal_support": "irregular_or_daily",
       "source_url": null,
       "source_notes": "Requires data collection and explicit consent/permissions where applicable; no field observations are currently included in this repository."
+    },
+    {
+      "target_id": "karnataka_groundwater_depth",
+      "source_id": "karnataka_groundwater",
+      "name": "Karnataka Ground Water Department telemetry observations",
+      "target_variable": "groundwater_depth_m",
+      "status": "candidate_hydrological_context",
+      "recommended_use": "Review station-level groundwater depth, time coverage, and location metadata for hydrological context or a separately defined groundwater-stress task.",
+      "not_suitable_for": "Treating these station readings as direct daily ground truth for the composite soil/crop water-stress index without a documented and validated relationship.",
+      "temporal_support": "six_hourly_station_telemetry",
+      "source_url": "https://nwdp.nwic.gov.in/en/dataset/ground-water-level-telemetry-hourly-karnataka-ground-water-department",
+      "source_notes": "Karnataka Ground Water Department dataset exposed by NWDP. Source timezone, station coordinates, datum, cadence, missingness and licence terms require review. The connector writes local raw data and an auditable quality report; no source rows are packaged in Git."
     }
   ]
 }

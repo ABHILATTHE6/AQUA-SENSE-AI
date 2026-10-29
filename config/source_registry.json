@@ -1,5 +1,5 @@
 {
-  "version": "1.2.0",
+  "version": "1.3.0",
   "sources": [
     {
       "source_id": "open_meteo",
@@ -37,6 +37,18 @@
         "groundwater_depth_m"
       ],
       "notes": "Candidate independent hydrological context or target for a separately defined groundwater-stress task. Station, cadence, local relevance, and source coverage require review. See config/reference_target_registry.json."
+    },
+    {
+      "source_id": "karnataka_groundwater",
+      "name": "Karnataka Ground Water Department telemetry via National Water Data Portal",
+      "category": "groundwater",
+      "access_type": "public_csv_download",
+      "status": "connector_implemented",
+      "canonical_variables": [
+        "groundwater_depth_m"
+      ],
+      "source_url": "https://nwdp.nwic.gov.in/en/dataset/ground-water-level-telemetry-hourly-karnataka-ground-water-department",
+      "notes": "Day 10 connector for the Karnataka six-hourly 2021-2025 CSV resource. Source data are not committed; the quality report and rejected-row quarantine are generated locally. Observations remain candidate reference records until reviewed."
     }
   ]
 }

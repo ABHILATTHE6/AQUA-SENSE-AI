@@ -1,5 +1,16 @@
 # Changelog
 
+## Day 10 — Karnataka Groundwater Reference Acquisition & Quality Review
+
+- Added a streaming CSV acquisition path for Karnataka Ground Water Department telemetry published through the National Water Data Portal.
+- Added header-resilient normalization into the reference-target contract, retaining station metadata, optional coordinates, explicit timezone assumptions, and candidate-only independence status.
+- Added SHA-256 provenance, a download-size cap, raw-file preservation, offline processing mode, and a CLI row limit for smoke checks.
+- Added a streaming quality profile for coverage, station and district counts, timestamp span, coordinate completeness, depth range, and rejection reasons.
+- Added duplicate station/timestamp detection and rejected-row quarantine instead of silent imputation or correction.
+- Added source and reference-target registry entries, a synthetic CSV fixture, tests, and acquisition documentation.
+- No source data are stored in Git; predictive accuracy remains unassessed pending target-suitability and alignment review.
+
+
 ## Day 9 — Independent Reference Target & Forecasting Readiness
 
 - Added a machine-readable reference-target contract for sourced numeric measurements and categorical assessments.

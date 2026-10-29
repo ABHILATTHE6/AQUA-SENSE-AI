@@ -23,3 +23,7 @@ Provider payloads remain unchanged inside the raw layer. Normalization and contr
 ## Data Safety
 
 Large raw datasets are not committed to Git. `.gitignore` excludes raw and processed data by default. Small synthetic fixtures may be committed under `samples/` or test fixture directories.
+
+## Karnataka groundwater candidate reference
+
+The Day 10 connector stores provider-native CSV under data/raw/karnataka_groundwater/<UTC-date>/ and writes normalized JSONL under data/processed/reference/. Rejected records and reports are also generated locally. Raw and processed data should remain out of Git; do not commit the full provider export. Source and timezone assumptions are documented in docs/karnataka-groundwater-acquisition.md.

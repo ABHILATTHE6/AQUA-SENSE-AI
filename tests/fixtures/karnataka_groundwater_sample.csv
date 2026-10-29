@@ -1,0 +1,4 @@
+"_id","SlNo","Station","Agency","State LGD Code","State","District LGD Code","District","Tehsil","Block","Village","River","Basin","Tributary","Subtributary","SubSubtributary","Local River","Latitude","Longitude","RL_MSL","Data Acquisition Time","Groundwater Level Telemetry 6 Hourly (meter)","colspacer"
+"sample-row-1","1","Well Alpha","Karnataka GW","29","Karnataka","571","Mysuru","Mysuru","Block A","Village A","","Cauvery","","","","","12.3000","76.6500","720.5","2025-01-01 06:00:00","8.25",""
+"sample-row-2","2","Well Alpha","Karnataka GW","29","Karnataka","571","Mysuru","Mysuru","Block A","Village A","","Cauvery","","","","","12.3000","76.6500","720.5","2025-01-01 12:00:00","8.15",""
+"sample-row-3","3","Well Beta","Karnataka GW","29","Karnataka","572","Mandya","Mandya","Block B","Village B","","Cauvery","","","","","12.5000","76.9000","690.0","2025-01-01 06:00:00","10.40",""
