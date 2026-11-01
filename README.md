@@ -29,10 +29,18 @@ Current flow:
 
 `Open-Meteo → raw/reanalysis → canonical observations → daily inputs → quality profile → leakage-safe features → rule-based stress index`
 
-Next: **Day 11 — Inspect downloaded coverage and define safe station-weather alignment**
+Next: **Day 12 — Select a Karnataka study area and acquire matched weather observations**
 
 
 
+
+## Groundwater daily summaries and alignment audit (Day 11)
+
+    python scripts/prepare_groundwater_alignment.py --input data/processed/reference/karnataka_groundwater.jsonl
+
+The script groups readings by Asia/Kolkata local date, retains incomplete days with explicit coverage flags, and calculates station-to-weather-location distance candidates. It does not automatically join observations. The current weather coordinate remains a neutral demo point, so select a real Karnataka study area before attempting comparison.
+
+See [the alignment protocol](docs/groundwater-weather-alignment.md).
 
 ## Karnataka groundwater acquisition and quality review (Day 10)
 

@@ -1,5 +1,16 @@
 # Changelog
 
+## Day 11 — Groundwater Daily Summaries & Weather Alignment Audit
+
+- Added local-calendar aggregation of six-hourly station readings with timezone conversion, mean/median/range/latest summaries, and observation-count coverage.
+- Retained incomplete station-days with explicit sufficiency status; no missing observations are imputed.
+- Added duplicate timestamp and station-coordinate consistency safeguards.
+- Added Haversine proximity candidates between groundwater stations and configured weather points, with configurable radius and ambiguity margin.
+- Prevented automatic joins where coordinates are missing, the nearest point is too far away, or the nearest choice is ambiguous.
+- Added an offline preparation CLI, JSON audit report, timezone-aware daily weather aggregation option, tests, and alignment protocol documentation.
+- Kept all groundwater records as candidate hydrological context; no composite-index ground-truth or predictive-accuracy claim is made.
+
+
 ## Day 10 — Karnataka Groundwater Reference Acquisition & Quality Review
 
 - Added a streaming CSV acquisition path for Karnataka Ground Water Department telemetry published through the National Water Data Portal.
