@@ -23,7 +23,7 @@ AQUA-SENSE AI is an end-to-end AI/Data Science platform designed to analyze envi
 
 ## Development status
 
-**Day 10 — Karnataka groundwater reference ingestion and quality-review pipeline complete**
+**Day 12 — Belagavi pilot configured and local-time historical weather ingestion ready**
 
 Current flow:
 
