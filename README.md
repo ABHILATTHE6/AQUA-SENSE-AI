@@ -29,10 +29,26 @@ Current flow:
 
 `Open-Meteo → raw/reanalysis → canonical observations → daily inputs → quality profile → leakage-safe features → rule-based stress index`
 
-Next: **Day 12 — Select a Karnataka study area and acquire matched weather observations**
+Next: **Day 13 — Inspect live Belagavi coverage and validate candidate station matches**
 
 
 
+
+## Belagavi pilot study area (Day 12)
+
+The first Karnataka pilot configuration is Belagavi city at 15.8521° N, 74.5045° E, using the official Belagavi Cantonment Board city-map reference. This coordinate is a representative weather-request point, not a groundwater well location.
+
+Run the study-area preflight:
+
+    python scripts/check_study_area_readiness.py --study-area belagavi_city_pilot
+
+Acquire 2025 hourly historical weather with India local time:
+
+    python scripts/ingest_historical_weather.py --location belagavi_city_pilot --start-date 2025-01-01 --end-date 2025-12-31
+
+The ERA5 model is selected for the current five-variable input contract; it is a roughly 25 km reanalysis grid estimate, not site-station truth. The ingestion code now preserves timezone-aware local timestamps rather than relabelling them as UTC. No automatic groundwater-weather join is performed.
+
+See [the Belagavi pilot study-area protocol](docs/study-area-belagavi.md).
 
 ## Groundwater daily summaries and alignment audit (Day 11)
 

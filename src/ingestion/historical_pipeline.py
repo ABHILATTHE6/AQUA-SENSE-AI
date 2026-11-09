@@ -42,7 +42,7 @@ def ingest_historical_open_meteo(
         encoding="utf-8",
     )
 
-    daily_rows = aggregate_daily(observations)
+    daily_rows = aggregate_daily(observations, timezone_name=config.timezone)
     daily_dir = Path(daily_root) / config.location_id / "daily"
     daily_dir.mkdir(parents=True, exist_ok=True)
     daily_path = daily_dir / f"{config.start_date}_{config.end_date}.jsonl"
@@ -50,5 +50,4 @@ def ingest_historical_open_meteo(
         "".join(json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n" for item in daily_rows),
         encoding="utf-8",
     )
-
     return raw_path, hourly_path, daily_path, len(observations), len(daily_rows)

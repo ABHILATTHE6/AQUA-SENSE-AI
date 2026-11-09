@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "study_areas": {
+    "belagavi_city_pilot": {
+      "study_area_id": "belagavi_city_pilot",
+      "name": "Belagavi City Pilot",
+      "administrative_area": "Belagavi, Karnataka, India",
+      "location_id": "belagavi_city_pilot",
+      "latitude": 15.8521,
+      "longitude": 74.5045,
+      "timezone": "Asia/Kolkata",
+      "coordinate_source": "Belagavi Cantonment Board official city map page",
+      "coordinate_source_url": "https://belgaum.cantt.gov.in/city-map/",
+      "coordinate_semantics": "Representative city reference point; not a groundwater station coordinate or a verified weather-grid cell centre.",
+      "weather_provider": "Open-Meteo Historical Weather API",
+      "weather_model": "era5",
+      "nominal_weather_resolution_km": 25,
+      "groundwater_station_candidate_radius_km": 15,
+      "status": "pilot_configuration_pending_real_station_review",
+      "limitations": [
+        "City reference coordinate is a single-point pilot and does not represent the whole Belagavi district.",
+        "ERA5 is a reanalysis grid estimate, not an on-site weather-station observation.",
+        "The candidate radius is for station discovery only; it is not a scientifically validated join radius.",
+        "Groundwater station coordinates, timestamps, measurement datum and local relevance require review before any join."
+      ]
+    }
+  }
+}

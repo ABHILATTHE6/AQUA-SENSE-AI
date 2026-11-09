@@ -1,5 +1,17 @@
 # Changelog
 
+## Day 12 — Belagavi Pilot Study Area & Local-Time Weather Acquisition
+
+- Added a documented Belagavi city pilot coordinate from the Belagavi Cantonment Board city-map reference while retaining the neutral demo location.
+- Added a study-area registry with timezone, coordinate provenance, ERA5 model choice, grid-resolution caveat and a station-discovery radius.
+- Updated historical Open-Meteo ingestion to accept validated IANA timezones and preserve provider offsets on normalized hourly observations.
+- Fixed local-time timestamps being incorrectly labelled as UTC when the provider returns naive timestamps for a non-UTC timezone.
+- Updated daily historical aggregation to use the configured local calendar timezone.
+- Added a study-area readiness CLI for reporting nearby groundwater station candidates without creating a join.
+- Added tests for timezone normalization, local-day aggregation, study-area configuration and station proximity.
+- Documented that ERA5 reanalysis is a gridded estimate and that live data acquisition and station validation remain to be executed.
+
+
 ## Day 11 — Groundwater Daily Summaries & Weather Alignment Audit
 
 - Added local-calendar aggregation of six-hourly station readings with timezone conversion, mean/median/range/latest summaries, and observation-count coverage.

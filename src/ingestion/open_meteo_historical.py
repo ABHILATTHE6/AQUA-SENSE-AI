@@ -9,6 +9,7 @@ from typing import Any, Callable
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from src.ingestion.base import RawRecord, utc_now
 
@@ -65,8 +66,10 @@ class HistoricalConfig:
             raise ValueError("end_date must be on or after start_date")
         if (end - start).days + 1 > self.max_days:
             raise ValueError(f"historical request cannot exceed {self.max_days} days")
-        if self.timezone != "UTC":
-            raise ValueError("AQUA-SENSE historical ingestion currently requires timezone=UTC")
+        try:
+            ZoneInfo(self.timezone)
+        except (ZoneInfoNotFoundError, TypeError) as exc:
+            raise ValueError(f"timezone must be a valid IANA timezone: {self.timezone}") from exc
         if not self.model.strip():
             raise ValueError("model must be non-empty")
 
@@ -108,7 +111,6 @@ def fetch_payload(
     opener: Callable[..., Any] = urlopen,
 ) -> dict[str, Any]:
     """Fetch one provider-native historical payload without transformation."""
-
     request = Request(
         config.url(),
         headers={"Accept": "application/json", "User-Agent": "aqua-sense-ai/0.1"},
@@ -130,7 +132,6 @@ def to_raw_record(
     retrieved_at: datetime | None = None,
 ) -> RawRecord:
     """Wrap the untouched reanalysis payload with provenance."""
-
     return RawRecord(
         source_id=SOURCE_ID,
         retrieved_at=retrieved_at or utc_now(),
@@ -143,11 +144,9 @@ def _validate_hourly_shape(payload: dict[str, Any]) -> tuple[list[str], dict[str
     hourly = payload.get("hourly")
     if not isinstance(hourly, dict):
         raise OpenMeteoHistoricalError("response is missing hourly object")
-
     times = hourly.get("time")
     if not isinstance(times, list) or not times:
         raise OpenMeteoHistoricalError("response is missing hourly.time")
-
     variables: dict[str, list[Any]] = {}
     for field in HISTORICAL_HOURLY_VARIABLES:
         values = hourly.get(field)
@@ -166,39 +165,65 @@ def _observation_id(location_id: str, variable: str, timestamp: str) -> str:
     return f"open_meteo:{location_id}:{safe_time}:{variable}"
 
 
-def normalize_payload(config: HistoricalConfig, payload: dict[str, Any]) -> list[dict[str, Any]]:
-    """Convert hourly reanalysis arrays into canonical observations."""
+def _normalize_timestamp(raw_time: str, timezone_name: str) -> str:
+    """Preserve provider offsets; attach the requested zone to naive local times."""
+    normalized = raw_time[:-1] + "+00:00" if raw_time.endswith("Z") else raw_time
+    try:
+        value = datetime.fromisoformat(normalized)
+    except ValueError as exc:
+        raise OpenMeteoHistoricalError(
+            f"historical provider returned invalid ISO timestamp: {raw_time!r}"
+        ) from exc
 
+    if value.tzinfo is None or value.utcoffset() is None:
+        try:
+            value = value.replace(tzinfo=ZoneInfo(timezone_name))
+        except ZoneInfoNotFoundError as exc:
+            raise OpenMeteoHistoricalError(
+                f"provider returned an unknown timezone: {timezone_name}"
+            ) from exc
+        if timezone_name in {"UTC", "Etc/UTC", "GMT"}:
+            return value.strftime("%Y-%m-%dT%H:%M:%SZ")
+    return value.isoformat()
+
+
+def normalize_payload(config: HistoricalConfig, payload: dict[str, Any]) -> list[dict[str, Any]]:
+    """Convert hourly reanalysis arrays into timezone-aware canonical observations."""
     times, variables = _validate_hourly_shape(payload)
     latitude = payload.get("latitude", config.latitude)
     longitude = payload.get("longitude", config.longitude)
     provider_timezone = payload.get("timezone", config.timezone)
+    utc_offset_seconds = payload.get("utc_offset_seconds")
     observations: list[dict[str, Any]] = []
 
     for index, raw_time in enumerate(times):
-        observed_at = raw_time if raw_time.endswith("Z") else f"{raw_time}Z"
+        observed_at = _normalize_timestamp(raw_time, str(provider_timezone))
         for provider_field, (variable, unit) in CANONICAL_MAPPING.items():
             value = variables[provider_field][index]
             if value is None:
                 continue
-            observations.append(
-                {
-                    "observation_id": _observation_id(config.location_id, variable, raw_time),
-                    "observed_at": observed_at,
-                    "location_id": config.location_id,
-                    "source": SOURCE_ID,
-                    "variable": variable,
-                    "value": value,
-                    "unit": unit,
-                    "quality_flag": "estimated",
-                    "latitude": latitude,
-                    "longitude": longitude,
-                    "metadata": {
-                        "provider_field": provider_field,
-                        "provider_timezone": provider_timezone,
-                        "reanalysis_model": config.model,
-                        "historical": True,
-                    },
-                }
-            )
+            observations.append({
+                "observation_id": _observation_id(config.location_id, variable, raw_time),
+                "observed_at": observed_at,
+                "location_id": config.location_id,
+                "source": SOURCE_ID,
+                "variable": variable,
+                "value": value,
+                "unit": unit,
+                "quality_flag": "estimated",
+                "latitude": latitude,
+                "longitude": longitude,
+                "metadata": {
+                    "provider_field": provider_field,
+                    "provider_timezone": provider_timezone,
+                    "provider_utc_offset_seconds": utc_offset_seconds,
+                    "requested_timezone": config.timezone,
+                    "reanalysis_model": config.model,
+                    "historical": True,
+                    "timestamp_timezone_interpretation": (
+                        "provider offset preserved" if "+" in observed_at[10:] or observed_at.endswith("Z")
+                        else "provider timezone applied to naive timestamp"
+                    ),
+                },
+            })
     return observations

@@ -2,6 +2,15 @@
   "demo_location": {
     "latitude": 20.5937,
     "longitude": 78.9629,
-    "description": "Neutral project demo coordinate; replace with an explicitly selected study area."
+    "description": "Neutral project demo coordinate; not a selected study area.",
+    "timezone": "UTC",
+    "model": "era5"
+  },
+  "belagavi_city_pilot": {
+    "latitude": 15.8521,
+    "longitude": 74.5045,
+    "description": "Belagavi city reference point from the Belagavi Cantonment Board city map; representative coordinate only, not a groundwater station.",
+    "timezone": "Asia/Kolkata",
+    "model": "era5"
   }
 }
